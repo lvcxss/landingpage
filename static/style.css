@@ -1,0 +1,30 @@
+:root {
+  --global-font-size: 16px;
+  --font-stack: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  --background-color: #121212;
+  --font-color: #e8e9ed;
+  --primary-color: #bf00ff;
+  --secondary-color: #383a42;
+  --error-color: #9900d1;
+}
+
+.btn-default {
+  background-color: var(--secondary-color);
+}
+
+body {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+#hookrobot {
+  margin-top: 10%;
+  font-size: 1.5rem;
+
+  margin-bottom: 15%
+}
+
+#hookrobot small {
+  font-size: 1rem;
+}

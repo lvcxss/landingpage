@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{.Title}}</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.4/dist/terminal.min.css" />
+  <link rel="stylesheet" href="/static/style.css">
+
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+
+<body class="terminal">
+  <div class="container">
+
+    <header>
+      <div class="logo terminal-prompt"><a href="/" class="no-style">/home/lvcxs</a></div>
+    </header>
+
+    <nav class="terminal-menu">
+      <ul>
+        <li><a class="menu-item active" href="#">home</a></li>
+        <li><a class="menu-item" href="#whoami">whoami</a></li>
+        <li><a class="menu-item" href="#roadmap">roadmap</a></li>
+        <li><a class="menu-item" href="#posts">posts</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <blockquote id="hook-quote">
+        <!--add hook quotes here from backend, example w mr robot-->
+        "Hello, friend. Hello, friend? That's lame. Maybe I should give you a name, but that's a slippery slope."
+        <br>
+        <small>— Mr. Robot</small>
+      </blockquote>
+      <section id="whoami">
+
+        <h2>$ whoami</h2>
+        <p>
+          Hello. My name is Lucas and I'm a cybersecurity enthusiast. I'm currently studying at Universidade de Coimbra
+          pursuiting a Master's degree in Informatic Engineering with focus in Cybersecurity,
+          where I previously graduated with a Bachelor's degree in Informatic Engineering.
+
+          <br>
+          <br>
+          <br>
+          This is my personal blog where my main goal is to document my journey, present my self and possibly even teach
+          you something new.
+
+        </p>
+      </section>
+
+      <hr>
+
+      <section id="roadmap">
+        <h2>$ cat /var/log/experience.log</h2>
+        <div class="terminal-timeline">
+
+          <!--TODO: add experience here-->
+
+        </div>
+      </section>
+
+
+
+      <hr>
+
+      <section id="posts">
+        <h2 id="posts-header">$ ls -la ./posts/</h2>
+        <div style="margin-bottom: 20px;">
+          <button class="btn btn-default filter-btn" onclick="filterPosts('all', '')">All</button>
+          <button class="btn btn-error filter-btn" onclick="filterPosts('writeups', 'write-ups/')">Write-ups</button>
+          <button class="btn btn-error filter-btn" onclick="filterPosts('tutorials', 'tutorials/')">Tutorials</button>
+          <button class="btn btn-error filter-btn" onclick="filterPosts('blog', 'blog/')">Blog</button>
+          <button class="btn btn-error filter-btn" onclick="filterPosts('projects', 'projects/')">Projects</button>
+        </div>
+
+        <!--TODO: add posts here-->
+      </section>
+
+
+    </main>
+
+    <hr>
+
+    <footer>
+      <p>
+        <a href="https://github.com/lvcxss">GitHub</a> |
+        <a href="https://www.linkedin.com/in/lucas-oliveira-378313317/">LinkedIn</a>
+      </p>
+    </footer>
+  </div>
+</body>
+<script>
+  const headerEl = document.getElementById('posts-header');
+  const basePath = "$ ls -la ./posts/";
+  let isAnimating = false;
+
+  async function typeWriterEffect(newSuffix) {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    const targetText = basePath + newSuffix;
+    let currentText = headerEl.innerText;
+
+    //erase
+    while (currentText.length > basePath.length && currentText !== targetText) {
+      currentText = currentText.slice(0, -1);
+      headerEl.innerText = currentText;
+      await new Promise(r => setTimeout(r, 40)); //erase speed 
+    }
+
+    //write
+    while (currentText.length < targetText.length) {
+      currentText = targetText.slice(0, currentText.length + 1);
+      headerEl.innerText = currentText;
+      await new Promise(r => setTimeout(r, 80)); //writing speed
+    }
+
+    isAnimating = false;
+  }
+
+  function filterPosts(category, suffix) {
+    typeWriterEffect(suffix);
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('btn-default');
+      btn.classList.add('btn-error');
+    });
+    event.target.classList.remove('btn-error');
+    event.target.classList.add('btn-default');
+
+    const posts = document.querySelectorAll('.post-item');
+    posts.forEach(post => {
+      if (category === 'all' || post.dataset.category === category) {
+        post.style.display = 'flex';
+      } else {
+        post.style.display = 'none';
+      }
+    });
+  }
+</script>
+
+</html>
