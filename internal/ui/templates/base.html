@@ -1,0 +1,46 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{.Title}}</title>
+  <link rel="stylesheet" href="{{.BasePath}}/static/terminus.css">
+  <link rel="stylesheet" href="{{.BasePath}}/static/style.css">
+  <script src="{{.BasePath}}/static/terminus.js"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+
+<body class="terminal">
+  <div class="container">
+    <header>
+      <div class="logo terminal-prompt"><a href="{{.BasePath}}/" class="no-style">/home/lvcxs</a></div>
+    </header>
+
+    <nav class="terminal-menu">
+      <ul>
+        <li><a class="menu-item" href="{{.BasePath}}/">home</a></li>
+        <li><a class="menu-item" href="{{.BasePath}}/#whoami">whoami</a></li>
+        <li><a class="menu-item" href="{{.BasePath}}/#roadmap">roadmap</a></li>
+        <li><a class="menu-item" href="{{.BasePath}}/#posts">posts</a></li>
+        <li><a class="menu-item" href="{{.BasePath}}/static/showcase.html">css-docs</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      {{template "main" .}}
+    </main>
+
+    <hr>
+    <footer>
+      <p>
+        <a href="https://github.com/lvcxss">GitHub</a> |
+        <a href="https://www.linkedin.com/in/lucas-oliveira-378313317/">LinkedIn</a>
+      </p>
+    </footer>
+  </div>
+</body>
+
+</html>
+{{end}}

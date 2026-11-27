@@ -1,0 +1,1313 @@
+/**
+ * ============================================================================
+ * TERMINUS CSS (v1.0.0)
+ * A lightweight, dark-purple terminal-inspired CSS design system & component library.
+ * Built with crisp monospace aesthetics, ASCII motifs, and nested subtimelines.
+ * ============================================================================
+ */
+
+/* ----------------------------------------------------------------------------
+   1. DESIGN TOKENS & ROOT THEME
+   ------------------------------------------------------------------------- */
+:root {
+  /* Geometry & Layout */
+  --global-font-size: 15px;
+  --global-line-height: 1.6;
+  --global-space: 12px;
+  --page-width: 68em;
+  --border-radius: 0px;
+  /* Sharp terminal aesthetics */
+
+  /* Typography */
+  --font-stack: 'Fira Code', 'JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
+  --mono-font-stack: var(--font-stack);
+
+  /* Surfaces & Backgrounds: Dark Grey close to Black */
+  --bg-canvas: #101014;
+  /* Terminal background */
+  --bg-surface: #16161c;
+  /* Cards, containers, windows */
+  --bg-surface-elevated: #1e1e26;
+  /* Active tabs, hover states */
+  --bg-code: #121217;
+  /* Code block background */
+  --bg-subtle: #24252f;
+  /* Inset controls, muted bars */
+
+  /* Text & Inks */
+  --font-color: #e8e9ed;
+  /* Default high-contrast terminal text */
+  --font-muted: #8b8e9d;
+  /* Secondary log text, timestamps, labels */
+  --font-bright: #ffffff;
+  /* Highlighted / active text */
+  --invert-font-color: #ffffff;
+
+  /* Signature Dark Purples */
+  --primary-color: #bf00ff;
+  /* Neon electric dark purple */
+  --primary-hover: #d74bff;
+  /* Lighter vibrant purple */
+  --primary-dim: #9900d1;
+  /* Deep rich purple */
+  --primary-dark: #320046;
+  /* Deep purple wash / accent bg */
+  --primary-glow: rgba(191, 0, 255, 0.18);
+  --primary-glow-strong: rgba(191, 0, 255, 0.25);
+
+  /* Neutrals */
+  --secondary-color: #383a42;
+  /* Terminal secondary grey */
+  --secondary-light: #4c4e58;
+  --secondary-dark: #22232a;
+
+  /* Borders */
+  --border-color: #2b2d37;
+  --border-subtle: #1c1d24;
+  --border-accent: #bf00ff;
+
+  /* Status Colors */
+  --error-color: #9900d1;
+  /* Error purple */
+  --error-alt: #ff3366;
+  /* Alert crimson */
+  --success-color: #00e599;
+  /* Phosphor green */
+  --warning-color: #f7a41d;
+  /* Terminal amber */
+  --info-color: #8be9fd;
+  /* Terminal cyan */
+
+  /* Timeline Tokens */
+  --timeline-spine: #2d2f3a;
+  --timeline-spine-active: #bf00ff;
+  --timeline-node-size: 14px;
+  --timeline-node-bg: #101014;
+  --timeline-node-border: #bf00ff;
+}
+
+/* ----------------------------------------------------------------------------
+   2. BASE RESET & ACCESSIBILITY
+   ------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  text-rendering: geometricPrecision;
+}
+
+html {
+  background-color: var(--bg-canvas);
+  color-scheme: dark;
+  scroll-behavior: smooth;
+  font-size: var(--global-font-size);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-canvas);
+  color: var(--font-color);
+  font-family: var(--font-stack);
+  line-height: var(--global-line-height);
+  word-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Selection Highlight */
+::selection {
+  background-color: var(--primary-color);
+  color: var(--font-bright);
+}
+
+/* Terminal Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-canvas);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border: 1px solid var(--border-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dim);
+}
+
+/* ----------------------------------------------------------------------------
+   3. TYPOGRAPHY & ELEMENTS
+   ------------------------------------------------------------------------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-stack);
+  font-weight: 700;
+  color: var(--font-bright);
+  line-height: 1.35;
+  margin-top: calc(var(--global-space) * 2);
+  margin-bottom: var(--global-space);
+  position: relative;
+}
+
+h1 {
+  font-size: 1.85rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 2px solid var(--primary-color);
+  display: inline-block;
+}
+
+h2 {
+  font-size: 1.45rem;
+  color: var(--font-bright);
+}
+
+h3 {
+  font-size: 1.2rem;
+  color: var(--primary-hover);
+}
+
+h4 {
+  font-size: 1.05rem;
+}
+
+h5,
+h6 {
+  font-size: 0.95rem;
+  color: var(--font-muted);
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: var(--global-line-height);
+  color: var(--font-color);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.15s ease, background-color 0.15s ease;
+  cursor: pointer;
+}
+
+a:hover {
+  color: var(--font-bright);
+  background-color: var(--primary-dark);
+}
+
+a.no-style {
+  color: inherit;
+  background-color: transparent !important;
+}
+
+em {
+  font-style: italic;
+  color: var(--font-muted);
+}
+
+strong {
+  font-weight: 700;
+  color: var(--font-bright);
+}
+
+small {
+  font-size: 0.85em;
+  color: var(--font-muted);
+}
+
+hr {
+  border: none;
+  border-top: 1px dashed var(--secondary-color);
+  margin: calc(var(--global-space) * 2.5) 0;
+  position: relative;
+}
+
+blockquote {
+  position: relative;
+  margin: 1.5rem 0;
+  padding: 0.85rem 1.25rem;
+  background-color: var(--bg-surface);
+  border-left: 3px solid var(--primary-color);
+  color: var(--font-color);
+  font-style: italic;
+}
+
+blockquote small {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--font-muted);
+  font-style: normal;
+}
+
+/* Code & Pre */
+code {
+  font-family: var(--mono-font-stack);
+  font-size: 0.9em;
+  background-color: var(--bg-code);
+  color: #df80ff;
+  padding: 0.15em 0.45em;
+  border: 1px solid var(--border-color);
+}
+
+pre {
+  background-color: var(--bg-code);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--primary-dim);
+  padding: var(--global-space);
+  overflow-x: auto;
+  margin: 1.2rem 0;
+  color: var(--font-color);
+  font-family: var(--mono-font-stack);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+  display: block;
+}
+
+/* Lists */
+ul,
+ol {
+  padding-left: 1.8rem;
+  margin-top: 0;
+  margin-bottom: var(--global-line-height);
+}
+
+li {
+  margin-bottom: 0.4rem;
+}
+
+ul {
+  list-style-type: none;
+}
+
+ul>li {
+  position: relative;
+}
+
+ul>li::before {
+  content: "» ";
+  color: var(--primary-color);
+  position: absolute;
+  left: -1.2rem;
+  font-weight: bold;
+}
+
+/* ----------------------------------------------------------------------------
+   4. LAYOUT & CONTAINERS
+   ------------------------------------------------------------------------- */
+.container {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 calc(var(--global-space) * 1.5);
+}
+
+.container-fluid {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 calc(var(--global-space) * 1.5);
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--global-space);
+}
+
+.col {
+  flex: 1 1 0%;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-1 {
+  gap: calc(var(--global-space) * 0.5);
+}
+
+.gap-2 {
+  gap: var(--global-space);
+}
+
+.gap-3 {
+  gap: calc(var(--global-space) * 1.5);
+}
+
+/* ----------------------------------------------------------------------------
+   5. TERMINUS PROMPTS & SHELL DECORATIONS
+   ------------------------------------------------------------------------- */
+.terminal-prompt {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--mono-font-stack);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.terminal-prompt::before {
+  content: ">_ ";
+  color: var(--primary-color);
+  margin-right: 0.2ch;
+  font-weight: 700;
+}
+
+.terminal-prompt::after {
+  content: "";
+  display: inline-block;
+  width: 0.6em;
+  height: 1.15em;
+  background-color: var(--primary-color);
+  margin-left: 0.3ch;
+  vertical-align: -0.15em;
+  animation: terminus-cursor-blink 0.5s steps(2, start) infinite;
+  box-shadow: 0 0 6px var(--primary-glow);
+}
+
+@keyframes terminus-cursor-blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Command Prompt Prefix Utility */
+.cmd::before {
+  content: "$ ";
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+/* ----------------------------------------------------------------------------
+   6. TERMINUS WINDOWS & CARDS
+   ------------------------------------------------------------------------- */
+.terminal-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--secondary-color);
+  margin-bottom: 1.5rem;
+  position: relative;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.terminal-card:hover {
+  border-color: var(--border-accent);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.terminal-card>header,
+.terminal-card-header {
+  background-color: var(--secondary-color);
+  color: var(--font-bright);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.terminal-card>div:not(.terminal-card-header),
+.terminal-card-body {
+  padding: 1rem 1.25rem;
+}
+
+.terminal-card>footer,
+.terminal-card-footer {
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
+  padding: 0.5rem 1rem;
+  font-size: 0.88em;
+  color: var(--font-muted);
+}
+
+/* Terminal Window with retro title bar & controls */
+.terminal-window {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1.5rem;
+}
+
+.terminal-window-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--secondary-dark);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.82rem;
+}
+
+.terminal-window-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-red {
+  background: #ff5f56;
+}
+
+.dot-yellow {
+  background: #ffbd2e;
+}
+
+.dot-green {
+  background: #27c93f;
+}
+
+.terminal-window-title {
+  color: var(--font-muted);
+  font-family: var(--mono-font-stack);
+  font-size: 0.82rem;
+}
+
+/* ----------------------------------------------------------------------------
+   7. NAVIGATION & MENUS
+   ------------------------------------------------------------------------- */
+.terminal-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: calc(var(--global-space) * 2);
+}
+
+@media only screen and (min-width: 48em) {
+  .terminal-nav {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.terminal-menu {
+  width: 100%;
+}
+
+.terminal-menu ul {
+  list-style-type: none;
+  padding: 0 !important;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.terminal-menu li {
+  margin: 0;
+  padding: 0;
+}
+
+.terminal-menu li::before {
+  display: none;
+}
+
+.terminal-menu li a,
+.menu-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  color: var(--font-muted);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+  font-family: var(--mono-font-stack);
+}
+
+.terminal-menu li a::before,
+.menu-item::before {
+  content: "[ ";
+  color: var(--primary-color);
+  opacity: 0.6;
+}
+
+.terminal-menu li a::after,
+.menu-item::after {
+  content: " ]";
+  color: var(--primary-color);
+  opacity: 0.6;
+}
+
+.terminal-menu li a:hover,
+.menu-item:hover {
+  color: var(--font-bright);
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dim);
+}
+
+.terminal-menu li a.active,
+.menu-item.active {
+  color: var(--font-bright);
+  border-color: var(--primary-color);
+  background-color: var(--primary-dark);
+}
+
+/* ----------------------------------------------------------------------------
+   8. BUTTONS & CONTROLS
+   ------------------------------------------------------------------------- */
+.btn {
+  font-family: var(--font-stack);
+  font-size: 0.95em;
+  padding: 0.55em 1.25em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+  color: var(--font-color);
+  border: 1px solid var(--secondary-color);
+  text-decoration: none;
+  user-select: none;
+  transition: all 0.15s ease;
+  line-height: 1.2;
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--font-bright);
+  border-color: var(--secondary-light);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-default {
+  background-color: var(--secondary-color);
+  color: var(--font-bright);
+  border-color: var(--secondary-color);
+}
+
+.btn-default:hover {
+  background-color: var(--secondary-light);
+  border-color: var(--primary-dim);
+}
+
+.btn-primary {
+  background-color: var(--primary-dim);
+  color: var(--font-bright);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px var(--primary-glow);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-hover);
+  box-shadow: 0 0 14px var(--primary-glow-strong);
+}
+
+.btn-error {
+  background-color: var(--primary-dim);
+  color: var(--font-bright);
+  border-color: var(--error-color);
+}
+
+.btn-error:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-hover);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--border-color);
+  color: var(--font-color);
+}
+
+.btn-ghost:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background: var(--primary-dark);
+}
+
+.btn-sm {
+  padding: 0.35em 0.8em;
+  font-size: 0.82em;
+}
+
+.btn-lg {
+  padding: 0.8em 1.8em;
+  font-size: 1.1em;
+}
+
+.btn-block {
+  display: flex;
+  width: 100%;
+}
+
+.btn-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+/* ----------------------------------------------------------------------------
+   9. TIMELINE & NESTED SUBTIMELINES
+   ------------------------------------------------------------------------- */
+/* Primary Timeline Container */
+.terminal-timeline {
+  position: relative;
+  padding-left: 55px;
+  margin: 2rem 0;
+}
+
+/* Vertical Timeline Spine */
+.terminal-timeline::before {
+  content: '';
+  position: absolute;
+  left: 22px;
+  top: 15px;
+  bottom: 15px;
+  width: 2px;
+  background: linear-gradient(180deg,
+      var(--primary-color) 0%,
+      var(--timeline-spine) 15%,
+      var(--timeline-spine) 85%,
+      var(--primary-dim) 100%);
+  z-index: 1;
+}
+
+/* Timeline Item / Card */
+.terminal-timeline>.terminal-card,
+.terminal-timeline .terminal-timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+/* Timeline Node Marker */
+.terminal-timeline>.terminal-card::before,
+.terminal-timeline .terminal-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -40px;
+  top: 14px;
+  width: var(--timeline-node-size);
+  height: var(--timeline-node-size);
+  background-color: var(--timeline-node-bg);
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 0 8px var(--primary-glow);
+  z-index: 2;
+  transition: all 0.2s ease;
+}
+
+.terminal-timeline>.terminal-card:hover::before,
+.terminal-timeline .terminal-timeline-item:hover::before {
+  background-color: var(--primary-color);
+  box-shadow: 0 0 14px var(--primary-glow-strong);
+  transform: scale(1.18);
+}
+
+/* Timeline Item Header */
+.timeline-header-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.timeline-period {
+  font-size: 0.85em;
+  color: var(--font-muted);
+  font-family: var(--mono-font-stack);
+}
+
+/* ============================================================================
+   SUBTIMELINE: NESTED / CONCURRENT TIMELINE SYSTEM
+   Supports events starting & ending during a parent event's timespan
+   ============================================================================ */
+.terminal-subtimeline {
+  margin-top: 1.25rem;
+  background-color: var(--bg-canvas);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--primary-color);
+  position: relative;
+}
+
+/* Subtimeline Top Meta/Header Bar */
+.subtimeline-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--secondary-dark);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82em;
+}
+
+.subtimeline-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5ch;
+  color: var(--primary-hover);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.subtimeline-label .branch-symbol {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* Tabbed Subtimeline Navigation */
+.subtimeline-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  background-color: #121216;
+  border-bottom: 1px solid var(--border-color);
+  padding: 4px 6px 0 6px;
+}
+
+.subtimeline-tab-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+  color: var(--font-muted);
+  font-family: var(--mono-font-stack);
+  font-size: 0.85em;
+  padding: 0.45em 0.85em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5ch;
+  transition: all 0.15s ease;
+  position: relative;
+  top: 1px;
+}
+
+.subtimeline-tab-btn:hover {
+  color: var(--font-bright);
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dim);
+}
+
+.subtimeline-tab-btn.active {
+  background-color: var(--bg-surface-elevated);
+  color: var(--font-bright);
+  border-color: var(--primary-color);
+  border-top: 2px solid var(--primary-color);
+  border-bottom: 1px solid var(--bg-surface-elevated);
+  font-weight: 600;
+  box-shadow: 0 -2px 8px var(--primary-glow);
+}
+
+.subtimeline-tab-btn .tab-bracket {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* Subtimeline Content Panels */
+.subtimeline-panel {
+  display: none;
+  padding: 1rem 1.15rem;
+  background-color: var(--bg-surface-elevated);
+  animation: terminus-fade-in 0.2s ease-in-out;
+}
+
+.subtimeline-panel.active {
+  display: block;
+}
+
+@keyframes terminus-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.subtimeline-panel-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.subtimeline-panel-header h4 {
+  margin: 0;
+  font-size: 1.05em;
+  color: var(--font-bright);
+}
+
+.subtimeline-timespan {
+  font-size: 0.84em;
+  color: var(--primary-hover);
+  background-color: var(--primary-dark);
+  border: 1px solid var(--primary-dim);
+  padding: 0.18em 0.6em;
+  font-family: var(--mono-font-stack);
+  font-weight: 600;
+}
+
+.subtimeline-body {
+  font-size: 0.93em;
+  line-height: 1.55;
+  color: var(--font-color);
+}
+
+.subtimeline-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.subtimeline-tags .tag {
+  font-size: 0.78em;
+  padding: 0.15em 0.5em;
+  background-color: var(--secondary-dark);
+  border: 1px solid var(--secondary-color);
+  color: var(--font-muted);
+}
+
+/* Sequential Branch Tree Track Subtimeline */
+.subtimeline-branch-track {
+  position: relative;
+  padding-left: 24px;
+  margin: 0.85rem 0 0.5rem;
+}
+
+.subtimeline-branch-track::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--primary-dim);
+}
+
+.subtimeline-branch-node {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.subtimeline-branch-node:last-child {
+  margin-bottom: 0;
+}
+
+.subtimeline-branch-node::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 5px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--bg-canvas);
+  border: 2px solid var(--primary-color);
+  border-radius: 50%;
+}
+
+.subtimeline-branch-title {
+  font-weight: 600;
+  color: var(--font-bright);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Collapsible Subtimeline Details */
+details.subtimeline-details {
+  margin-top: 1rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--primary-color);
+}
+
+details.subtimeline-details summary {
+  padding: 0.6rem 0.9rem;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  color: var(--font-bright);
+  background-color: var(--secondary-dark);
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6ch;
+}
+
+details.subtimeline-details summary::-webkit-details-marker {
+  display: none;
+}
+
+details.subtimeline-details summary::before {
+  content: "▶ ";
+  color: var(--primary-color);
+  font-size: 0.85em;
+  transition: transform 0.15s ease;
+}
+
+details.subtimeline-details[open] summary::before {
+  content: "▼ ";
+}
+
+details.subtimeline-details .subtimeline-details-content {
+  padding: 1rem;
+}
+
+/* ----------------------------------------------------------------------------
+   10. CLI FILE LISTS & ROWS
+   ------------------------------------------------------------------------- */
+.cli-file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cli-file-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px 15px;
+  background-color: var(--secondary-color);
+  color: var(--font-color);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.cli-file-row:hover {
+  background-color: #2a2c33;
+  border-left-color: var(--primary-color);
+  transform: translateX(5px);
+  color: var(--font-bright);
+}
+
+.file-type {
+  color: var(--primary-color);
+  font-weight: bold;
+  min-width: 110px;
+}
+
+.file-name {
+  flex-grow: 1;
+  margin-left: 10px;
+}
+
+.cli-file-row:hover .file-name {
+  color: #ffffff;
+}
+
+.file-date {
+  opacity: 0.65;
+  font-size: 0.9em;
+  color: var(--font-muted);
+}
+
+/* ----------------------------------------------------------------------------
+   11. FORMS & INPUT CONTROLS
+   ------------------------------------------------------------------------- */
+.form-group {
+  margin-bottom: var(--global-line-height);
+}
+
+label {
+  display: block;
+  font-size: 0.92em;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--font-muted);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.6em 0.8em;
+  font-family: var(--mono-font-stack);
+  font-size: 0.95em;
+  background-color: var(--bg-surface);
+  color: var(--font-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px var(--primary-glow);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--secondary-light);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ----------------------------------------------------------------------------
+   12. TABLES & DATA VIEWS
+   ------------------------------------------------------------------------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--global-line-height) 0;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+}
+
+table th,
+table td {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+table th {
+  background-color: var(--secondary-color);
+  color: var(--font-bright);
+  font-weight: 700;
+}
+
+table tr:hover {
+  background-color: var(--bg-surface-elevated);
+}
+
+/* ----------------------------------------------------------------------------
+   13. ALERTS & BADGES
+   ------------------------------------------------------------------------- */
+.terminal-alert {
+  padding: 0.85rem 1.15rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
+  color: var(--font-color);
+  position: relative;
+}
+
+.terminal-alert-primary {
+  border-color: var(--primary-color);
+  border-left: 4px solid var(--primary-color);
+  background-color: var(--primary-dark);
+}
+
+.terminal-alert-error {
+  border-color: var(--error-color);
+  border-left: 4px solid var(--error-color);
+}
+
+.terminal-alert-success {
+  border-color: var(--success-color);
+  border-left: 4px solid var(--success-color);
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.75em;
+  padding: 0.2em 0.6em;
+  font-family: var(--mono-font-stack);
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  background-color: var(--secondary-color);
+  color: var(--font-bright);
+}
+
+.badge-purple {
+  border-color: var(--primary-dim);
+  background-color: var(--primary-dark);
+  color: var(--primary-hover);
+}
+
+.badge-outline {
+  background: transparent;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+/* ----------------------------------------------------------------------------
+   14. MARKDOWN TYPOGRAPHY (.terminal-mkd)
+   ------------------------------------------------------------------------- */
+.terminal-mkd {
+  line-height: 1.7;
+}
+
+.terminal-mkd h1,
+.terminal-mkd h2,
+.terminal-mkd h3,
+.terminal-mkd h4 {
+  margin-top: 2rem;
+  margin-bottom: 0.85rem;
+  color: var(--font-bright);
+}
+
+.terminal-mkd h2 {
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 0.35rem;
+}
+
+.terminal-mkd p {
+  margin-bottom: 1.25rem;
+}
+
+.terminal-mkd pre {
+  margin: 1.4rem 0;
+  border-left: 3px solid var(--primary-color);
+}
+
+.terminal-mkd .markdown-code-block {
+  margin: 1.5rem 0;
+}
+
+.terminal-mkd .markdown-code-block pre {
+  margin: 0 !important;
+  border: none !important;
+  border-left: none !important;
+  background-color: transparent !important;
+}
+
+.terminal-mkd code {
+  font-size: 0.92em;
+}
+
+.terminal-mkd ul,
+.terminal-mkd ol {
+  padding-left: 1.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.terminal-mkd li {
+  margin-bottom: 0.4rem;
+}
+
+/* ----------------------------------------------------------------------------
+   15. UTILITIES & RESPONSIVENESS
+   ------------------------------------------------------------------------- */
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.text-muted {
+  color: var(--font-muted) !important;
+}
+
+.text-bright {
+  color: var(--font-bright) !important;
+}
+
+.text-error {
+  color: var(--error-color) !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.m-0 {
+  margin: 0 !important;
+}
+
+.mt-1 {
+  margin-top: calc(var(--global-space) * 0.5);
+}
+
+.mt-2 {
+  margin-top: var(--global-space);
+}
+
+.mt-3 {
+  margin-top: calc(var(--global-space) * 1.5);
+}
+
+.mb-1 {
+  margin-bottom: calc(var(--global-space) * 0.5);
+}
+
+.mb-2 {
+  margin-bottom: var(--global-space);
+}
+
+.mb-3 {
+  margin-bottom: calc(var(--global-space) * 1.5);
+}
+
+@media screen and (max-width: 768px) {
+  .terminal-timeline {
+    padding-left: 35px;
+  }
+
+  .terminal-timeline::before {
+    left: 12px;
+  }
+
+  .terminal-timeline>.terminal-card::before,
+  .terminal-timeline .terminal-timeline-item::before {
+    left: -29px;
+  }
+
+  .subtimeline-tabs {
+    flex-direction: column;
+  }
+
+  .subtimeline-tab-btn {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .subtimeline-tab-btn.active {
+    border-bottom: 1px solid var(--primary-color);
+  }
+}

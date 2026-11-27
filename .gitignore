@@ -1,2 +1,8 @@
 .env 
 tmp/* 
+schema_db.sql
+
+/docs/cv/
+/docs/writeups/
+/docs/blog/
+/public/

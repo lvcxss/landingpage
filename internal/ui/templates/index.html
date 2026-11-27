@@ -1,0 +1,177 @@
+{{template "base" .}}
+
+{{define "main"}}
+<br>
+<br>
+<blockquote id="hook-quote">
+  <!--add hook quotes here from backend, example w mr robot-->
+  "Hello, friend. Hello, friend? That's lame. Maybe I should give you a name, but that's a slippery slope."
+  <br>
+  <small>— Mr. Robot</small>
+</blockquote>
+<section id="whoami">
+
+  <h2>$ whoami</h2>
+  <p>
+    Hello. My name is Lucas and I'm a cybersecurity enthusiast. I'm currently studying at Universidade de Coimbra
+    pursuiting a Master's degree in Informatic Engineering with focus in Cybersecurity,
+    where I previously graduated with a Bachelor's degree in Informatic Engineering.
+
+  </p>
+</section>
+
+<hr>
+
+<section id="roadmap">
+  <h2>$ cat /var/log/experience.log</h2>
+  <div class="terminal-timeline">
+    {{range .Experiences}}
+    <div class="terminal-timeline-item">
+      <div class="terminal-card">
+        <header>
+          <span>{{.Name}}</span>
+          <span class="timeline-period">{{.StartDate.Format "Jan 2006"}} — {{if .EndDate}}{{.EndDate.Format "Jan 2006"}}{{else}}Present{{end}}</span>
+        </header>
+        <div>
+          {{.Description}}
+        </div>
+      </div>
+    </div>
+    {{else}}
+    {{range $i, $exp := .Timeline}}
+    <div class="terminal-timeline-item">
+      <div class="terminal-card">
+        <header>
+          <span>{{.Name}}</span>
+          <span class="timeline-period">{{.Start}} — {{if .End}}{{.End}}{{else}}Present{{end}}</span>
+        </header>
+        <div>
+          <p>{{.Description}}</p>
+          {{with .Milestones}}
+          <div class="terminal-subtimeline">
+            <div class="subtimeline-meta">
+              <span class="subtimeline-label"><span class="branch-symbol">↳</span> SUBTIMELINE // CONCURRENT MILESTONES</span>
+              <span class="badge badge-purple">TABBED VIEW</span>
+            </div>
+            <div class="subtimeline-tabs">
+              {{range $j, $m := .}}
+              <button class="subtimeline-tab-btn{{if eq $j 0}} active{{end}}" data-target="#exp-{{$i}}-{{$j}}">
+                <span class="tab-bracket">[</span> {{.Period}} : {{.Label}} <span class="tab-bracket">]</span>
+              </button>
+              {{end}}
+            </div>
+            {{range $j, $m := .}}
+            <div id="exp-{{$i}}-{{$j}}" class="subtimeline-panel{{if eq $j 0}} active{{end}}">
+              <div class="subtimeline-panel-header">
+                <h4>{{.Title}}</h4>
+                <span class="subtimeline-timespan">{{.Period}}</span>
+              </div>
+              <div class="subtimeline-body">
+                <p>{{.Description}}</p>
+                <div class="subtimeline-tags">{{range .Tags}}<span class="tag">#{{.}}</span> {{end}}</div>
+              </div>
+            </div>
+            {{end}}
+          </div>
+          {{end}}
+        </div>
+      </div>
+    </div>
+    {{end}}
+    {{end}}
+  </div>
+</section>
+
+
+
+<hr>
+
+<section id="posts">
+  <h2 id="posts-header">$ ls -la ./posts/</h2>
+  <div style="margin-bottom: 20px;">
+    <button class="btn btn-default filter-btn" onclick="filterPosts('all', '', event)">All</button>
+    <button class="btn btn-error filter-btn" onclick="filterPosts('write-up', 'write-ups/', event)">Write-ups</button>
+    <button class="btn btn-error filter-btn" onclick="filterPosts('guide', 'tutorials/', event)">Tutorials</button>
+    <button class="btn btn-error filter-btn" onclick="filterPosts('project', 'projects/', event)">Projects</button>
+  </div>
+  <div id="posts-list" class="cli-file-list">
+    {{range .Posts}}
+    <a href="{{$.BasePath}}/post/{{.ID}}" class="cli-file-row post-item" data-category="{{.PostType.String}}">
+      <span class="file-type">[{{.PostType.String}}]</span>
+      <span class="file-name">{{.Title}}</span>
+      <span class="file-date">{{.CreatedAt.Format "Jan 02, 2006"}}</span>
+    </a>
+    {{else}}
+    <p>>_ directory is empty.</p>
+    {{end}}
+  </div>
+</section>
+
+
+<hr>
+
+<section id="about-this-website">
+  <h2 id="about-this-website-header">$ cat /var/log/about-this-website.log</h2>
+  <div>
+    <p>
+      This is my personal website, where my main goal is for you to know me better, show my skills to the world
+      and possibly teach you something new.
+    </p>
+    <h3 id="stack-used">$ grep -iA 5 "tech_stack" ./docs/architecture.md</h3>
+    <p>
+      For this website I wanted something simple, and efficient, therefore I tried to run away from the typical
+      React JS frontend (first of all, it would be overkill for this project) and I wanted to use a backend
+      language that I was comfortable with, so I decided to use GoLang as the backend language and HTMX as the
+      frontend framework. Instead of writting the whole CSS for this website, I used Terminal.css (I added some
+      tweaks for more personallity).
+
+
+    </p>
+  </div>
+</section>
+<script>
+  const headerEl = document.getElementById('posts-header');
+  const basePath = "$ ls -la ./posts/";
+  let activeToken = 0;
+
+  async function typeWriterEffect(newSuffix) {
+    const currentToken = ++activeToken;
+    const targetText = basePath + newSuffix;
+
+    while (headerEl.innerText.length > basePath.length) {
+      if (currentToken !== activeToken) return;
+      headerEl.innerText = headerEl.innerText.slice(0, -1);
+      await new Promise(r => setTimeout(r, 40));
+    }
+
+    while (headerEl.innerText.length < targetText.length) {
+      if (currentToken !== activeToken) return;
+      headerEl.innerText = targetText.slice(0, headerEl.innerText.length + 1);
+      await new Promise(r => setTimeout(r, 80));
+    }
+  }
+
+  function filterPosts(category, suffix, evt) {
+    typeWriterEffect(suffix);
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('btn-default');
+      btn.classList.add('btn-error');
+    });
+
+    const targetBtn = evt ? evt.target : event.target;
+    targetBtn.classList.remove('btn-error');
+    targetBtn.classList.add('btn-default');
+    const posts = document.querySelectorAll('.post-item');
+    posts.forEach(post => {
+      if (category === 'all' || post.dataset.category === category) {
+        post.style.display = 'flex';
+      } else {
+        post.style.display = 'none';
+      }
+    });
+  }
+
+
+</script>
+{{end}}

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminus CSS - Component Showcase & Subtimeline Demo</title>
+  <link rel="stylesheet" href="./terminus.css">
+  <style>
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 1.5rem 0;
+    }
+    .swatch {
+      padding: 1rem;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .swatch-color {
+      height: 48px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .swatch-label {
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+    .swatch-hex {
+      font-size: 0.8em;
+      color: var(--font-muted);
+    }
+    .component-section {
+      margin-bottom: 3.5rem;
+    }
+  </style>
+</head>
+<body class="terminal">
+  <div class="container">
+    <header style="margin-top: 2rem;">
+      <div class="terminal-prompt">
+        <a href="../" class="no-style">/sys/lib/terminus.css</a>
+      </div>
+      <p style="color: var(--font-muted); margin-top: 0.5rem;">
+        Lightweight, dark-purple terminal-inspired CSS design system featuring nested and tabbed subtimelines.
+      </p>
+    </header>
+
+    <nav class="terminal-menu" style="margin: 1.5rem 0;">
+      <ul>
+        <li><a class="menu-item" href="#colors">colors</a></li>
+        <li><a class="menu-item" href="#timelines">subtimelines</a></li>
+        <li><a class="menu-item" href="#windows">windows-and-cards</a></li>
+        <li><a class="menu-item" href="#buttons">buttons</a></li>
+        <li><a class="menu-item" href="#cli-files">cli-file-list</a></li>
+        <li><a class="menu-item" href="../">back-home</a></li>
+      </ul>
+    </nav>
+
+    <hr>
+
+    <!-- SECTION: COLOR PALETTE -->
+    <section id="colors" class="component-section">
+      <h2>$ cat /etc/theme/palette.conf</h2>
+      <p>Custom dark purple accents paired with deep terminal grey close to black:</p>
+      
+      <div class="palette-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background-color: var(--primary-color);"></div>
+          <div class="swatch-label">Primary Neon Purple</div>
+          <div class="swatch-hex">#bf00ff (--primary-color)</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background-color: var(--primary-dim);"></div>
+          <div class="swatch-label">Deep Rich Purple</div>
+          <div class="swatch-hex">#9900d1 (--primary-dim / error)</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background-color: var(--secondary-color);"></div>
+          <div class="swatch-label">Secondary Dark Grey</div>
+          <div class="swatch-hex">#383a42 (--secondary-color)</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background-color: var(--bg-canvas);"></div>
+          <div class="swatch-label">Canvas (Near Black)</div>
+          <div class="swatch-hex">#101014 (--bg-canvas)</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background-color: var(--bg-surface);"></div>
+          <div class="swatch-label">Surface Grey</div>
+          <div class="swatch-hex">#16161c (--bg-surface)</div>
+        </div>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- SECTION: TIMELINES & TABBED SUBTIMELINES -->
+    <section id="timelines" class="component-section">
+      <h2>$ cat /var/log/timeline_subtimeline_feature.log</h2>
+      <p>
+        <strong>Subtimeline Feature:</strong> Displays concurrent or nested activities that started and ended 
+        <em>during</em> an ongoing primary lifecycle or residency (e.g., studying for a CS degree between 2016-2019 
+        while residing in Bosnia between 2014-2022).
+      </p>
+
+      <h3>1. Interactive Tabbed Subtimeline</h3>
+      <p style="color: var(--font-muted); font-size: 0.9em;">
+        Click the tabs below to switch between concurrent activities occurring inside the Bosnia 2014-2022 period:
+      </p>
+
+      <div class="terminal-timeline">
+        <!-- Milestone 1: Bosnia with Tabbed Subtimeline -->
+        <div class="terminal-timeline-item">
+          <div class="terminal-card">
+            <header>
+              <span>Bosnia & Herzegovina (2014 — 2022)</span>
+              <span class="badge badge-purple">RESIDENCY & STUDIES</span>
+            </header>
+            <div>
+              <p>
+                Relocated to Bosnia & Herzegovina for 8 years. Built strong foundations in system administration, 
+                cybersecurity practices, and completed formal university degrees during this residency.
+              </p>
+
+              <!-- NESTED TABBED SUBTIMELINE COMPONENT -->
+              <div class="terminal-subtimeline">
+                <div class="subtimeline-meta">
+                  <span class="subtimeline-label">
+                    <span class="branch-symbol">↳</span> SUBTIMELINE // CONCURRENT ACTIVITIES
+                  </span>
+                  <span style="color: var(--font-muted); font-size: 0.85em;">[tabbed-view]</span>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="subtimeline-tabs">
+                  <button class="subtimeline-tab-btn active" data-target="#subtab-degree">
+                    <span class="tab-bracket">[</span> 2016 — 2019 : B.Sc. Computer Science <span class="tab-bracket">]</span>
+                  </button>
+                  <button class="subtimeline-tab-btn" data-target="#subtab-sysadmin">
+                    <span class="tab-bracket">[</span> 2018 — 2020 : Network & SysAdmin Labs <span class="tab-bracket">]</span>
+                  </button>
+                  <button class="subtimeline-tab-btn" data-target="#subtab-ctf">
+                    <span class="tab-bracket">[</span> 2020 — 2022 : Independent CTF Research <span class="tab-bracket">]</span>
+                  </button>
+                </div>
+
+                <!-- Panel 1: CS Degree -->
+                <div id="subtab-degree" class="subtimeline-panel active">
+                  <div class="subtimeline-panel-header">
+                    <h4>B.Sc. in Computer Science</h4>
+                    <span class="subtimeline-timespan">2016 — 2019</span>
+                  </div>
+                  <div class="subtimeline-body">
+                    <p>
+                      Enrolled and graduated with a Bachelor's Degree in Computer Science during the Bosnia stay. 
+                      Acquired core fundamentals in data structures, algorithms, operating systems, networking architecture, 
+                      and computer security.
+                    </p>
+                    <div class="subtimeline-tags">
+                      <span class="tag">#academic-degree</span>
+                      <span class="tag">#c-cpp</span>
+                      <span class="tag">#operating-systems</span>
+                      <span class="tag">#networking</span>
+                      <span class="tag">#cryptography</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Panel 2: Network & SysAdmin Labs -->
+                <div id="subtab-sysadmin" class="subtimeline-panel">
+                  <div class="subtimeline-panel-header">
+                    <h4>Network & Linux Systems Lab</h4>
+                    <span class="subtimeline-timespan">2018 — 2020</span>
+                  </div>
+                  <div class="subtimeline-body">
+                    <p>
+                      Configured on-premise hypervisors (Proxmox, ESXi), managed Debian/Ubuntu servers, implemented 
+                      firewall routing policies, and built automated backup pipelines.
+                    </p>
+                    <div class="subtimeline-tags">
+                      <span class="tag">#linux</span>
+                      <span class="tag">#proxmox</span>
+                      <span class="tag">#bash</span>
+                      <span class="tag">#firewalls</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Panel 3: CTF Research -->
+                <div id="subtab-ctf" class="subtimeline-panel">
+                  <div class="subtimeline-panel-header">
+                    <h4>Cybersecurity & Offensive Research</h4>
+                    <span class="subtimeline-timespan">2020 — 2022</span>
+                  </div>
+                  <div class="subtimeline-body">
+                    <p>
+                      Intensive training on TryHackMe and HackTheBox. Focus on Web Application Vulnerabilities 
+                      (SQLi, Blind SQLi, XSS, SSRF), privilege escalation, and custom exploitation scripts in Python.
+                    </p>
+                    <div class="subtimeline-tags">
+                      <span class="tag">#sqli</span>
+                      <span class="tag">#burpsuite</span>
+                      <span class="tag">#python</span>
+                      <span class="tag">#pentesting</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- END SUBTIMELINE -->
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 2: Present Day / Coimbra -->
+        <div class="terminal-timeline-item">
+          <div class="terminal-card">
+            <header>
+              <span>Universidade de Coimbra (2022 — Present)</span>
+              <span class="badge badge-purple">MASTER'S DEGREE</span>
+            </header>
+            <div>
+              <p>
+                Pursuing a Master's degree in Informatic Engineering with specialization in Cybersecurity.
+                Researching advanced security models, penetration testing methodologies, and defensive architectures.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>2. Sequential Branch-Track Subtimeline</h3>
+      <p style="color: var(--font-muted); font-size: 0.9em;">
+        Alternative visual style using an indented branch spine with sequential sub-milestones:
+      </p>
+
+      <div class="terminal-card">
+        <header>
+          <span>Bosnia & Herzegovina (2014 — 2022) [Branch View]</span>
+          <span class="badge">BRANCH VIEW</span>
+        </header>
+        <div>
+          <p>Macro residency timeline with nested sub-branches:</p>
+
+          <div class="terminal-subtimeline">
+            <div class="subtimeline-meta">
+              <span class="subtimeline-label"><span class="branch-symbol">├──</span> CONCURRENT MILESTONES</span>
+            </div>
+            <div style="padding: 1rem 1.25rem;">
+              <div class="subtimeline-branch-track">
+                <div class="subtimeline-branch-node">
+                  <div class="subtimeline-branch-title">
+                    <span>2016 — 2019: B.Sc. in Computer Science</span>
+                    <span class="badge badge-purple">DEGREE</span>
+                  </div>
+                  <p style="color: var(--font-muted); font-size: 0.9em; margin-top: 4px;">
+                    Graduated with honors. Thesis on network protocol security analysis.
+                  </p>
+                </div>
+                <div class="subtimeline-branch-node">
+                  <div class="subtimeline-branch-title">
+                    <span>2018 — 2020: Systems Administration & Networking</span>
+                    <span class="badge">LABS</span>
+                  </div>
+                  <p style="color: var(--font-muted); font-size: 0.9em; margin-top: 4px;">
+                    Linux infrastructure, containerization, and network hardening.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>3. Collapsible Subtimeline Details</h3>
+      <p style="color: var(--font-muted); font-size: 0.9em;">
+        Expandable CLI accordion using pure HTML5 & CSS:
+      </p>
+
+      <details class="subtimeline-details">
+        <summary>
+          <span>2016 — 2019: B.Sc. Computer Science (Click to expand)</span>
+          <span class="badge badge-purple" style="margin-left: auto;">+ 3 SUB-TRACKS</span>
+        </summary>
+        <div class="subtimeline-details-content">
+          <p>Full breakdown of coursework, research papers, and technical competencies acquired during this degree.</p>
+          <ul>
+            <li>Algorithms & Computational Complexity</li>
+            <li>Advanced Network Protocols (TCP/IP, Routing, BGP)</li>
+            <li>Database Management Systems & SQL Query Optimization</li>
+            <li>Computer Architecture & Reverse Engineering Basics</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+
+    <hr>
+
+    <!-- SECTION: WINDOWS & CARDS -->
+    <section id="windows" class="component-section">
+      <h2>$ cat /sys/components/cards.txt</h2>
+      
+      <div class="terminal-window">
+        <div class="terminal-window-bar">
+          <div class="terminal-window-dots">
+            <span class="terminal-dot dot-red"></span>
+            <span class="terminal-dot dot-yellow"></span>
+            <span class="terminal-dot dot-green"></span>
+          </div>
+          <span class="terminal-window-title">lvcxs@cyberbox: ~</span>
+          <span style="font-size: 0.8em; color: var(--font-muted);">bash</span>
+        </div>
+        <div style="padding: 1.25rem;">
+          <p style="margin: 0; color: var(--primary-hover); font-weight: bold;">
+            $ nmap -sV -sC -Pn 10.10.10.45
+          </p>
+          <pre style="margin-top: 1rem; border: none; padding: 0.75rem; background: #0c0c10;">
+Starting Nmap 7.94 ( https://nmap.org ) at 2026-09-15 22:45 UTC
+Nmap scan report for target.internal (10.10.10.45)
+Host is up (0.042s latency).
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.9p1 Ubuntu
+80/tcp   open  http    nginx/1.18.0
+4000/tcp open  http    Go HTTP Server (LandingPage API)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</pre>
+        </div>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- SECTION: BUTTONS -->
+    <section id="buttons" class="component-section">
+      <h2>$ ./list_buttons.sh</h2>
+      <div class="btn-group" style="margin-bottom: 1rem;">
+        <button class="btn btn-default">Default Button</button>
+        <button class="btn btn-primary">Primary Neon Purple</button>
+        <button class="btn btn-error">Error Deep Purple</button>
+        <button class="btn btn-ghost">Ghost Border</button>
+        <button class="btn btn-primary btn-sm">Small Button</button>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- SECTION: CLI FILE ROWS -->
+    <section id="cli-files" class="component-section">
+      <h2>$ ls -la ./repository/</h2>
+      <div class="cli-file-list">
+        <a href="#" class="cli-file-row">
+          <span class="file-type">[write-up]</span>
+          <span class="file-name">prioritise-blind-sqli.md</span>
+          <span class="file-date">Jul 01, 2026</span>
+        </a>
+        <a href="#" class="cli-file-row">
+          <span class="file-type">[guide]</span>
+          <span class="file-name">linux-privilege-escalation-primer.md</span>
+          <span class="file-date">Jun 14, 2026</span>
+        </a>
+        <a href="#" class="cli-file-row">
+          <span class="file-type">[project]</span>
+          <span class="file-name">custom-cyberterm-css-framework.go</span>
+          <span class="file-date">May 20, 2026</span>
+        </a>
+      </div>
+    </section>
+
+    <hr>
+
+    <footer>
+      <p style="text-align: center; color: var(--font-muted); font-size: 0.9em;">
+        Terminus CSS • Developed for <a href="../">/home/lvcxs</a> • Pure Monospace Aesthetic
+      </p>
+    </footer>
+  </div>
+
+  <script src="./terminus.js"></script>
+</body>
+</html>

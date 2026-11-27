@@ -1,0 +1,27 @@
+{{template "base" .}}
+
+{{define "main"}}
+<br>
+<br>
+
+<section id="post-nav" style="margin-bottom: 20px;">
+  <a href="{{.BasePath}}/" class="btn btn-default">cd ../</a>
+</section>
+
+<section id="post-header">
+  <h2>$ cat {{.Title}}</h2>
+</section>
+
+<hr>
+
+<section id="post-content" class="terminal-mkd">
+  {{.Content}}
+</section>
+
+<hr>
+
+<section id="post-footer" style="text-align: center; margin-top: 20px;">
+  <p><small>[ EOF - End of File ]</small></p>
+</section>
+
+{{end}}

@@ -1,0 +1,81 @@
+name: Publish site
+on:
+  push:
+    branches: [master]
+  repository_dispatch:
+    types: [content-updated, cv-updated]
+  workflow_dispatch:
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go test ./...
+      - name: Fetch CV data from the latest CV release revision
+        env:
+          GH_TOKEN: ${{ secrets.CONTENT_READ_TOKEN || github.token }}
+          CV_REPOSITORY: ${{ vars.CV_REPOSITORY || 'lvcxss/cv' }}
+        run: |
+          tag=$(gh release view --repo "$CV_REPOSITORY" --json tagName --jq .tagName)
+          gh api --method GET -H 'Accept: application/vnd.github.raw+json' \
+            "repos/$CV_REPOSITORY/contents/cv.yaml" -f ref="$tag" > "$RUNNER_TEMP/cv.yaml"
+      - name: Check out writeups
+        uses: actions/checkout@v4
+        with:
+          repository: lvcxss/writeups
+          path: docs/writeups
+          fetch-depth: 0
+          persist-credentials: false
+          token: ${{ secrets.CONTENT_READ_TOKEN || github.token }}
+      - name: Check out blog
+        if: vars.BLOG_REPOSITORY != ''
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.BLOG_REPOSITORY }}
+          path: docs/blog
+          fetch-depth: 0
+          persist-credentials: false
+          token: ${{ secrets.CONTENT_READ_TOKEN || github.token }}
+      - id: pages
+        uses: actions/configure-pages@v5
+      - name: Render site
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          BLOG_REPOSITORY: ${{ vars.BLOG_REPOSITORY }}
+        run: |
+          args=()
+          if [[ -n "$BLOG_REPOSITORY" ]]; then args+=(-blog docs/blog); fi
+          go run ./cmd/site -cv "$RUNNER_TEMP/cv.yaml" -base "$BASE_PATH" "${args[@]}"
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.publish.outputs.page_url }}
+    steps:
+      - id: publish
+        uses: actions/deploy-pages@v4
